@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Line Coordinates Algo</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+    }
+    p {
+      margin: 10px;
+    }
+    input[type="text"] {
+      width: 100px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #0074d9;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculate Line Coordinates</h1>
+    <p>X1: <input type="text" class="x1" placeholder="X1"></p>
+    <p>Y1: <input type="text" class="y1" placeholder="Y1"></p>
+    <p>X2: <input type="text" class="x2" placeholder="X2"></p>
+    <p>Y2: <input type="text" class="y2" placeholder="Y2"></p>
+    <button onclick="cal()">Calculate</button>
+    <div class="result">
+      <p class="xp1"></p>
+      <p class="yp1"></p>
+      <p class="xp2"></p>
+      <p class="yp2"></p>
+      <p class="points"></p>
+    </div>
+  </div>
+
+  <script>
+    function cal() {
+      let x1 = parseInt(document.querySelector('.x1').value);
+      const x2 = parseInt(document.querySelector('.x2').value);
+      let y1 = parseInt(document.querySelector('.y1').value);
+      const y2 = parseInt(document.querySelector('.y2').value);
+
+      const xp1 = document.querySelector('.xp1');
+      const yp1 = document.querySelector('.yp1');
+      const xp2 = document.querySelector('.xp2');
+      const yp2 = document.querySelector('.yp2');
+      const pointsElement = document.querySelector('.points');
+
+      xp1.innerHTML = `Your coordinates are: (${x1},${y1}),(${x2},${y2})`;
+
+      let dx = x2 - x1;
+      let dy = y2 - y1;
+
+      let m = dy / dx;
+      yp1.innerHTML = `The Slope is ${m}`;
+
+      let p = 2 * dy - dx;
+      xp2.innerHTML = `Value of P in Initial is: ${p}`;
+      
+      const coordinates = [];
+
+      while (x1 < x2) {
+        coordinates.push({ x: x1, y: y1 });
+        if (p < 0) {
+          x1 = x1 + 1;
+          p = p + 2 * dy;
+        } else {
+          x1 = x1 + 1;
+          y1 = y1 + 1;
+          p = p + 2 * dy - 2 * dx;
+        }
+      }
+
+      pointsElement.innerHTML = 'Coordinates on the line:';
+      for (const coord of coordinates) {
+        pointsElement.innerHTML += `<br>(${coord.x},${coord.y})`;
+      }
+    }
+  </script>
+</body>
+</html>
